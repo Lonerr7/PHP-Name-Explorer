@@ -8,6 +8,7 @@ if (empty($name)) {
   die();
 }
 
+// Fetching name data
 $data = fetch_name_data($name);
 ?>
 <?php require __DIR__ . '/views/header.php'; ?>

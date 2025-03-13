@@ -14,14 +14,16 @@
 
 <body>
   <header>
-    <h1>Name explorer</h1>
+    <h1>
+      <a href="index.php">Name explorer</a>
+    </h1>
     <p>Explore and find names</p>
 
     <nav>
       <ul>
         <?php foreach ($alphabet as $letter): ?>
           <li>
-            <a href="index.php?<?php echo http_build_query(['char' => $letter]); ?>">
+            <a href="char.php?<?php echo http_build_query(['char' => $letter]); ?>">
               <?php echo e($letter); ?>
             </a>
           </li>
