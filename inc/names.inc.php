@@ -19,3 +19,11 @@ function fetch_names_by_initial(string $char): array
   return $names;
 }
 
+function fetch_name_data(string $name): array {
+  global $pdo;
+
+  $stmt = $pdo->prepare('SELECT * FROM `names` WHERE `name` = :name ORDER BY `names`.`year` DESC');
+  $stmt->bindValue(':name', $name);
+  $stmt->execute();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
