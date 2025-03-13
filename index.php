@@ -8,22 +8,6 @@ if (strlen($char) > 1) {
 }
 $char = strtoupper($char);
 
-function fetch_names_by_initial($char)
-{
-  global $pdo;
-  $names = [];
-
-  $stmt = $pdo->prepare('SELECT DISTINCT `name` FROM `names` WHERE `name` LIKE :letter ORDER BY `names`.`name` ASC');
-  $stmt->bindValue(':letter', "{$char}%");
-  $stmt->execute();
-  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  foreach ($results as $result) {
-    $names[] = $result['name'];
-  }
-
-  return $names;
-}
 
 $names = fetch_names_by_initial($char);
 
