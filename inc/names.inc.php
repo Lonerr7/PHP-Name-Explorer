@@ -2,14 +2,29 @@
 
 declare(strict_types=1);
 
-function fetch_names_by_initial(string $char): array
+function fetch_total_distinct_names_count(string $char): int
+{
+  global $pdo;
+  $stmt = $pdo->prepare('SELECT COUNT(DISTINCT `name`) AS `count` FROM `names` WHERE `name` LIKE :letter');
+  $stmt->bindValue(':letter', "{$char}%", PDO::PARAM_STR);
+  $stmt->execute();
+
+  return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+}
+
+function fetch_names_by_initial(string $char, int $currentPage = 1, int $limit = 15): array
 {
   global $pdo;
   $names = [];
 
-  $stmt = $pdo->prepare('SELECT DISTINCT `name` FROM `names` WHERE `name` LIKE :letter ORDER BY `names`.`name` ASC');
+  // Makung sure $currentPage is always not 0 or non-negative
+  $currentPage = max(1, $currentPage);
+
+  $stmt = $pdo->prepare('SELECT DISTINCT `name` FROM `names` WHERE `name` LIKE :letter ORDER BY `names`.`name` ASC LIMIT :limit OFFSET :offset');
   $stmt->bindValue(':letter', "{$char}%");
-  $stmt->execute(); 
+  $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+  $stmt->bindValue(':offset', $limit * ($currentPage - 1), PDO::PARAM_INT);
+  $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   foreach ($results as $result) {

@@ -4,3 +4,19 @@
   color: var(--bg) !important;
   font-weight: 700;
 }
+
+.pagiantaion {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-active {
+  display: inline-block;
+  background-color: rgb(137, 107, 43) !important;
+}
+
+.pagination__item:not(:last-child) {
+  margin-right: 10px;
+}
