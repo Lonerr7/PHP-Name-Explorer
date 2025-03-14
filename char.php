@@ -12,7 +12,7 @@ $char = strtoupper($char);
 $names = fetch_names_by_initial($char);
 
 render('char.view', [
-  'names' => $names
+  'names' => $names,
+  'char' => $char
 ]);
 ?>
->

@@ -20,7 +20,7 @@
       <ul>
         <?php foreach ($alphabet as $letter): ?>
           <li>
-            <a href="char.php?<?php echo http_build_query(['char' => $letter]); ?>">
+            <a class="<?php if (!empty($char) && $char === $letter) echo 'letter-active' ?>" href="char.php?<?php echo http_build_query(['char' => $letter]); ?>">
               <?php echo e($letter); ?>
             </a>
           </li>

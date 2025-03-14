@@ -13,5 +13,6 @@ $data = fetch_name_data($name);
 
 render('name.view', [
   'data' => $data,
-  'name' => $name
+  'name' => $name,
+  'char' => $name[0]
 ]);
