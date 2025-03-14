@@ -9,7 +9,7 @@ function fetch_names_by_initial(string $char): array
 
   $stmt = $pdo->prepare('SELECT DISTINCT `name` FROM `names` WHERE `name` LIKE :letter ORDER BY `names`.`name` ASC');
   $stmt->bindValue(':letter', "{$char}%");
-  $stmt->execute();
+  $stmt->execute(); 
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   foreach ($results as $result) {
