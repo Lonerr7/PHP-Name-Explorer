@@ -9,5 +9,3 @@ try {
   echo 'A problem occured with the database connection...';
   die();
 }
-
-
