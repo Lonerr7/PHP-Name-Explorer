@@ -1,0 +1,6 @@
+.active {
+  background: var(--accent);
+  border-color: var(--accent) !important;
+  color: black !important;
+  font-weight: 700 !important;
+}

@@ -3,7 +3,7 @@
   <!-- entry: $name, $count -->
   <?php foreach ($overview as $entry): ?>
     <li>
-      <a href="#"><?php echo e($entry['name']); ?></a>
+      <a href="name.php?<?php echo http_build_query(['name' => $entry['name']]); ?>"><?php echo e($entry['name']); ?></a>
     </li>
   <?php endforeach; ?>
 </ol>
