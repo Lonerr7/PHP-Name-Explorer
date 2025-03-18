@@ -2,4 +2,8 @@
 
 require __DIR__ . '/inc/all.inc.php';
 
-render('index.view', []);
+$overview = get_names_overview();
+
+render('index.view', [
+  'overview' => $overview
+]);
