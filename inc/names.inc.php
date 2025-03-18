@@ -42,3 +42,12 @@ function fetch_total_distinct_names_count(string $char): int {
   $stmt->execute();
   return $stmt->fetchAll(PDO::FETCH_ASSOC)[0]['count'];
 }
+
+function fetch_name_data(string $name): array {
+  global $pdo;
+
+  $stmt = $pdo->prepare('SELECT * FROM `names` WHERE `name` = :name ORDER BY `names`.`year` DESC');
+  $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+  $stmt->execute();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
