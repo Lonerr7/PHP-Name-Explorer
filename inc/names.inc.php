@@ -11,19 +11,34 @@ function fetch_names_overview()
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function fetch_names_by_letter(string $char): array
+function fetch_names_by_letter(string $char, int $currentPage = 1, int $limit = 15): array
 {
   global $pdo;
+  $names = [];
 
-  $stmt = $pdo->prepare('SELECT DISTINCT `name` FROM `names` WHERE `name` LIKE :letter ORDER BY `names`.`name` ASC;');
-  $stmt->bindValue(':letter', "{$char}%");
+  // Making sure $currentPage is always not 0
+  $currentPage = max(1, $currentPage); 
+
+  $stmt = $pdo->prepare('SELECT DISTINCT `name` FROM `names` WHERE `name` LIKE :letter ORDER BY `names`.`name` ASC LIMIT :limit OFFSET :offset');
+  $stmt->bindValue(':letter', "{$char}%", PDO::PARAM_STR);
+  $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+  $stmt->bindValue(':offset', $limit * ($currentPage - 1), PDO::PARAM_INT);
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  $simplifiedResults = [];
   foreach ($results as $result) {
-    $simplifiedResults[] = $result['name'];
+    $names[] = $result['name'];
   }
 
-  return $simplifiedResults;
+  return $names;
+}
+
+// Fetching total names count to build pagination
+function fetch_total_distinct_names_count(string $char): int {
+  global $pdo;
+
+  $stmt = $pdo->prepare('SELECT count(DISTINCT `name`) AS `count` FROM `names` WHERE `name` LIKE :letter');
+  $stmt->bindValue(':letter', "{$char}%");
+  $stmt->execute();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC)[0]['count'];
 }

@@ -1,15 +1,23 @@
 <?php
 require __DIR__ . '/inc/all.inc.php';
 
-$char = $_GET['char'] ?? 'A';
+$char = (string) ($_GET['char'] ?? 'A');
 if (strlen($char) > 1) {
   $char = $char[0];
 }
 
 // Fetch names for the selected char
-$names = fetch_names_by_letter($char) ?? [];
+$currentPage = (int) ($_GET['page'] ?? 1);
+$limit = 15;
+$names = fetch_names_by_letter($char, $currentPage, $limit) ?? [];
+$totalNamesCount = fetch_total_distinct_names_count($char);
 
 render('char.view', [
   'char' => $char,
-  'names' => $names
+  'names' => $names,
+  'pagination' => [
+    'currentPage' => $currentPage,
+    'totalNamesCount' => $totalNamesCount,
+    'limit' => $limit
+  ],
 ]);
