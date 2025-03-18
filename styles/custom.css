@@ -16,3 +16,8 @@
 .pagination__item:not(:last-child) {
   margin-right: 15px;
 }
+
+.pagination--active {
+  font-weight: 500;
+  background-color: #ddd889 !important;
+}
