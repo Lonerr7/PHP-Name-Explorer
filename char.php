@@ -2,9 +2,19 @@
 require __DIR__ . '/inc/all.inc.php';
 
 $char = (string) ($_GET['char'] ?? 'A');
+
+// Input validation
 if (strlen($char) > 1) {
   $char = $char[0];
 }
+
+$alphabet = gen_alphabet();
+if (strlen($char) === 0 || !in_array($char, $alphabet)) {
+  header('Location: index.php');
+  die();
+}
+
+$char = strtoupper($char);
 
 // Fetch names for the selected char
 $currentPage = (int) ($_GET['page'] ?? 1);
